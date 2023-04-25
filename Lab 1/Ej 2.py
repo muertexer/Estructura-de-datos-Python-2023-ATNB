@@ -3,33 +3,63 @@
 # consola. Luego se deben sumar en una función las matrices, y en otra función restarlas. En
 # este caso no se puede utilizar numpy, solo estructuras propias de Python.
 
-import numpy
+# FINALIZADO Y CORREGIDO 25/04
+# ORIGINIAL HECHO EL 18/04
 
-print("Creación de matriz 1")
+
+print("Creación de dos matrices")
 filas = int(input("Ingrese la cantidad de filas: "))
 columnas = int(input("Ingrese la cantidad de columnas: "))
+def crearMtrx(filas, columnas, seed=None):
+    a = []
+    for i in range(filas):
+        fila = []
+        for j in range(columnas):
+            if seed is None:
+                seed = "standard"
+            rnd1 = (hash(f"{i},{j},{seed}") % 5+1)
+            fila.append(rnd1)
+        a.append(fila)
+    return a
 
-m = numpy.zeros((filas, columnas))
-for i in range(filas):
-    filas = []
-    for j in range(columnas):
-        columnas = []
-        # intento de append a matriz con valores random
-        m[i][j] = (hash(i + j) % 5 + 1)
 
+def sumaMtrx(m,m2):
+    mf = []
+    for i in range(len(m)):
+        fila = []
+        for j in range(len(m[0])):
+            suma = m[i][j] + m2[i][j]
+            fila.append(suma)
+        mf.append(fila)
+    return mf
 
-print("\nCreación de matriz 2")
-filas2 = int(input("Ingrese la cantidad de filas: "))
-columnas2 = int(input("Ingrese la cantidad de columnas: "))
+def restaMtrx(m,m2):
+    mf = []
+    for i in range(len(m)):
+        fila = []
+        for j in range(len(m[0])):
+            res = m[i][j] - m2[i][j]
+            fila.append(res)
+        mf.append(fila)
+    return mf
 
-m2 = numpy.zeros((filas2, columnas2))
-for i in range(filas2):
-    filas2 = []
-    for j in range(columnas2):
-        m2[i][j] = int(input(f"Elemento ({i + 1}, {j + 1}): "))
+m = crearMtrx(filas,columnas, "algo1")
+print(f"\nMatriz 1:")
+for fila in m:
+    print(fila)
 
-if filas == filas2 and columnas == columnas2:
-    print(f"Suma matrices:\n{m+m2}'")
-    print(f"Resta matrices:\n{m-m2}'")
-else: print("Las matrices no son iguales en medida")
+m2 = crearMtrx(filas,columnas, "algo2")
+print(f"\nMatriz 2:")
+for fila in m2:
+    print(fila)
+
+mfinal = sumaMtrx(m, m2)
+print(f"\nSuma matrices: ")
+for fila in mfinal:
+    print(fila)
+
+mfinal = restaMtrx(m, m2)
+print(f"\nResta matrices: ")
+for fila in mfinal:
+    print(fila)
 
